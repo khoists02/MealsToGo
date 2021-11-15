@@ -1,8 +1,8 @@
 // import original module declarations
-import 'styled-components';
+import "styled-components";
 
 // and extend them!
-declare module 'styled-components' {
+declare module "styled-components" {
   export interface DefaultTheme {
     colors: {
       brand: {
@@ -30,7 +30,7 @@ declare module 'styled-components' {
         inverse: string;
         error: string;
         success: string;
-      }
+      };
     };
     space: Array<string>;
     fontSizes: {
@@ -43,21 +43,21 @@ declare module 'styled-components' {
       h3: string;
       h2: string;
       h1: string;
-    },
+    };
     fonts: {
       body: string;
       heading: string;
       monospace: string;
-    },
+    };
     sizes: Array<string>;
     fontWeights: {
       regular: number;
       medium: number;
       bold: number;
-    },
+    };
     lineHeights: {
       title: string;
       copy: string;
-    }
+    };
   }
 }

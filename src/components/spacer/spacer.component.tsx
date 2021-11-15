@@ -1,4 +1,3 @@
-import React from "react";
 import styled, { DefaultTheme } from "styled-components/native";
 
 interface ISpacer {

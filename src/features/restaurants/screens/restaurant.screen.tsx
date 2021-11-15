@@ -1,22 +1,41 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* @ts-ignore */
+import React, { useContext } from "react";
+import styled from "styled-components/native";
 import { Searchbar } from "react-native-paper";
 import { Spacer } from "../../../components/spacer/spacer.component";
 import { RestaurantInfoCard } from "../components/restaurant-info-card.component";
-import { SafeArea, SearchContainer, RestaurantList } from "./restaurant.styles";
+import { SearchContainer, RestaurantList } from "./restaurant.styles";
+import { SafeArea } from "../../../components/utility/safe-view-are.component";
+import { ActivityIndicator, Colors } from "react-native-paper";
+import { RestaurantsContext } from "../../../services/restaurant/restaurant.context";
 
-const data = [
-  { name: "a" },
-  { name: "b" },
-  { name: "c" },
-  { name: "d" },
-  { name: "f" },
-];
+const Loading = styled(ActivityIndicator)`
+  margin-left: -25px;
+`;
+const LoadingContainer = styled.View`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+`;
 
 export const RestaurantsScreen = () => {
+  /* @ts-ignore */
+  const { isLoading, error, restaurants } = useContext(RestaurantsContext);
+  /* @ts-ignore */
   const [searchQuery, setSearchQuery] = React.useState<string>("");
   const onChangeSearch = (query: string) => setSearchQuery(query);
+
+  if (restaurants.length > 0) {
+    console.log(JSON.stringify(restaurants));
+  }
   return (
     <SafeArea>
+      {isLoading && (
+        <LoadingContainer>
+          <Loading size={50} animating={true} color={Colors.blue300} />
+        </LoadingContainer>
+      )}
       <SearchContainer>
         <Searchbar
           placeholder="Search"
@@ -24,27 +43,17 @@ export const RestaurantsScreen = () => {
           value={searchQuery}
         />
       </SearchContainer>
-      <RestaurantList
-        data={data as any}
-        renderItem={({ item }: any) => (
-          <Spacer position="bottom" size="medium">
-            <RestaurantInfoCard
-              restaurant={{
-                name: "Some Restaurant",
-                icon: "test",
-                photos: [
-                  "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80",
-                ],
-                address: "100 some random address",
-                isOpeningNow: true,
-                rating: 4,
-              }}
-            />
-          </Spacer>
-        )}
-        keyExtractor={(item: any) => item.name}
-        contentContainerStyle={{ padding: 16 }}
-      />
+      {restaurants?.length > 0 && (
+        <RestaurantList
+          data={restaurants}
+          renderItem={({ item }: any) => (
+            <Spacer position="bottom" size="medium">
+              <RestaurantInfoCard restaurant={item} />
+            </Spacer>
+          )}
+          keyExtractor={(item: any) => item.name}
+        />
+      )}
     </SafeArea>
   );
 };
