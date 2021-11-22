@@ -1,4 +1,5 @@
 import React from "react";
+import { Text } from "react-native";
 import { RouteProp, useRoute } from "@react-navigation/core";
 import { SafeArea } from "../../../components/utility/safe-view-are.component";
 import {
@@ -19,6 +20,7 @@ export const RestaurantDetail = () => {
   return (
     <SafeArea>
       <RestaurantInfoCard restaurant={restaurant} />
+      <Text>This is the menu list for restaurant detail screen !!!</Text>
     </SafeArea>
   );
 };
